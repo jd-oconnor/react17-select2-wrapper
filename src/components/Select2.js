@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import shallowEqualFuzzy from 'shallow-equal-fuzzy';
-import $ from 'jquery';
-import 'select2';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
+import shallowEqualFuzzy from "shallow-equal-fuzzy";
+import $ from "jquery";
+import "select2";
 
-const namespace = 'react-select2-wrapper';
+const namespace = "react-select2-wrapper";
 
 export default class Select2 extends Component {
   static propTypes = {
@@ -33,11 +33,11 @@ export default class Select2 extends Component {
   static defaultProps = {
     data: [],
     events: [
-      [`change.${namespace}`, 'onChange'],
-      [`select2:open.${namespace}`, 'onOpen'],
-      [`select2:close.${namespace}`, 'onClose'],
-      [`select2:select.${namespace}`, 'onSelect'],
-      [`select2:unselect.${namespace}`, 'onUnselect'],
+      [`change.${namespace}`, "onChange"],
+      [`select2:open.${namespace}`, "onOpen"],
+      [`select2:close.${namespace}`, "onClose"],
+      [`select2:select.${namespace}`, "onSelect"],
+      [`select2:unselect.${namespace}`, "onUnselect"],
     ],
     options: {},
     multiple: false,
@@ -55,7 +55,8 @@ export default class Select2 extends Component {
     this.updateValue();
   }
 
-  componentWillReceiveProps(nextProps) {
+  // only UNSAFE_ will work with react v17.x
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.initialRender = false;
     this.updSelect2(nextProps);
   }
@@ -95,7 +96,7 @@ export default class Select2 extends Component {
       this.el.select2(this.prepareOptions(options));
     }
 
-    const handlerChanged = e => prevProps[e[1]] !== props[e[1]];
+    const handlerChanged = (e) => prevProps[e[1]] !== props[e[1]];
     if (props.events.some(handlerChanged)) {
       this.detachEventHandlers();
       this.attachEventHandlers(props);
@@ -103,7 +104,7 @@ export default class Select2 extends Component {
   }
 
   updateSelect2Value(value) {
-    this.el.off(`change.${namespace}`).val(value).trigger('change');
+    this.el.off(`change.${namespace}`).val(value).trigger("change");
 
     const onChange = this.props.onChange;
     if (onChange) {
@@ -116,18 +117,23 @@ export default class Select2 extends Component {
     const newValue = this.prepareValue(value, defaultValue);
     const currentValue = multiple ? this.el.val() || [] : this.el.val();
 
-    if (!this.fuzzyValuesEqual(currentValue, newValue) || this.forceUpdateValue) {
+    if (
+      !this.fuzzyValuesEqual(currentValue, newValue) ||
+      this.forceUpdateValue
+    ) {
       this.updateSelect2Value(newValue);
       if (!this.initialRender) {
-        this.el.trigger('change');
+        this.el.trigger("change");
       }
       this.forceUpdateValue = false;
     }
   }
 
   fuzzyValuesEqual(currentValue, newValue) {
-    return (currentValue === null && newValue === '') ||
-      shallowEqualFuzzy(currentValue, newValue);
+    return (
+      (currentValue === null && newValue === "") ||
+      shallowEqualFuzzy(currentValue, newValue)
+    );
   }
 
   destroySelect2(withCallbacks = true) {
@@ -135,29 +141,29 @@ export default class Select2 extends Component {
       this.detachEventHandlers();
     }
 
-    this.el.select2('destroy');
+    this.el.select2("destroy");
     this.el = null;
   }
 
   attachEventHandlers(props) {
-    props.events.forEach(event => {
-      if (typeof props[event[1]] !== 'undefined') {
+    props.events.forEach((event) => {
+      if (typeof props[event[1]] !== "undefined") {
         this.el.on(event[0], props[event[1]]);
       }
     });
   }
 
   detachEventHandlers() {
-    this.props.events.forEach(event => {
-      if (typeof this.props[event[1]] !== 'undefined') {
+    this.props.events.forEach((event) => {
+      if (typeof this.props[event[1]] !== "undefined") {
         this.el.off(event[0]);
       }
     });
   }
 
   prepareValue(value, defaultValue) {
-    const issetValue = typeof value !== 'undefined' && value !== null;
-    const issetDefaultValue = typeof defaultValue !== 'undefined';
+    const issetValue = typeof value !== "undefined" && value !== null;
+    const issetDefaultValue = typeof defaultValue !== "undefined";
 
     if (!issetValue && issetDefaultValue) {
       return defaultValue;
@@ -167,7 +173,7 @@ export default class Select2 extends Component {
 
   prepareOptions(options) {
     const opt = options;
-    if (typeof opt.dropdownParent === 'string') {
+    if (typeof opt.dropdownParent === "string") {
       opt.dropdownParent = $(opt.dropdownParent);
     }
     return opt;
@@ -175,16 +181,24 @@ export default class Select2 extends Component {
 
   isObject(value) {
     const type = typeof value;
-    return type === 'function' || (value && type === 'object') || false;
+    return type === "function" || (value && type === "object") || false;
   }
 
   makeOption(item) {
     if (this.isObject(item)) {
       const { id, text, ...itemParams } = item;
-      return (<option key={`option-${id}`} value={id} {...itemParams}>{text}</option>);
+      return (
+        <option key={`option-${id}`} value={id} {...itemParams}>
+          {text}
+        </option>
+      );
     }
 
-    return (<option key={`option-${item}`} value={item}>{item}</option>);
+    return (
+      <option key={`option-${item}`} value={item}>
+        {item}
+      </option>
+    );
   }
 
   render() {

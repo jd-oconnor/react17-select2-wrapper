@@ -1,7 +1,7 @@
 {
-  "name": "react-select2-wrapper",
-  "version": "1.0.4-beta6",
-  "description": "React component for Select2",
+  "name": "react17-select2-wrapper",
+  "version": "0.1.0",
+  "description": "React component for Select2, forked from react-select2-wrapper to provide support for react v17 and v18",
   "main": "lib/components/Select2.js",
   "files": [
     "lib",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rkit/react-select2-wrapper"
+    "url": "https://github.com/jd-oconnor/react17-select2-wrapper"
   },
   "keywords": [
     "react-component",
@@ -57,13 +57,13 @@
   },
   "peerDependencies": {
     "jquery": ">=2.1.4",
-    "react": "^0.14.0 || ^15.0.0-rc || ^15.0.0 || ^16.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0-rc || ^15.0.0 || ^16.0.0"
+    "react": "^0.14.0 || ^15.0.0-rc || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^0.14.0 || ^15.0.0-rc || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0"
   },
-  "author": "Igor Romanov <rkit.ru@gmail.com>",
+  "author": "Igor Romanov, Jake O'Connor",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rkit/react-select2-wrapper/issues"
+    "url": "https://github.com/jd-oconnor/react17-select2-wrapper/issues"
   },
-  "homepage": "https://github.com/rkit/react-select2-wrapper"
+  "homepage": "https://github.com/jd-oconnor/react17-select2-wrapper"
 }
